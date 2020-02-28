@@ -2,5 +2,7 @@
 Emulate a simple CPU using a virtual machine
 --
 Made by:
-### Micahel Sollazzo
+### Michael Sollazzo
+### Computer Organization - ICSI-404
 ### University at Albany
+
