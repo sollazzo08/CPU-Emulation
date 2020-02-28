@@ -43,6 +43,7 @@ int getRegister (char* string) {
 
 int encode3R(char *string, char *bytes, int opcode) {
 
+
 			bytes[0] = (opcode << 4) | getRegister(words[1]); //what value does that produce?? is it a binary or a hex?
 			bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
 			return 2; //number of bytes returned
@@ -54,7 +55,10 @@ int assembleLine(char *string, char *bytes) {
 	getWords(string);
 
 	if (strcmp(words[0] ,"add") == 0) {
-		encode3R(string,bytes,1);
+			//encode3R(string,bytes,1);
+			bytes[0] = (1 << 4) | getRegister(words[1]); //what value does that produce?? is it a binary or a hex?
+			bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
+			return 2; //number of bytes returned
 	}
 
 	if(strcmp(words[0] , "and") == 0) {
