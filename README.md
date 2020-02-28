@@ -6,3 +6,10 @@ Made by:
 ### Computer Organization - ICSI-404
 ### University at Albany
 
+##Instructions
+
+gcc assembleTemplate.c
+
+./a.out addTest.txt addTest.bin
+
+hexdump addTest.bin
