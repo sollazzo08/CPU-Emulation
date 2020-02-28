@@ -6,7 +6,7 @@ Made by:
 ### Computer Organization - ICSI-404
 ### University at Albany
 
-##Instructions
+## Instructions
 
 gcc assembleTemplate.c
 
