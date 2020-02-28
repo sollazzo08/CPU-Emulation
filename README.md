@@ -7,9 +7,9 @@ Emulate a simple CPU using a virtual machine
 
 gcc assembleTemplate.c
 
-./a.out addTest.txt addTest.bin
+./a.out assemblerLines.txt assemblerLines.bin
 
-hexdump addTest.bin
+hexdump assemblerLines.bin
 
 --
 
