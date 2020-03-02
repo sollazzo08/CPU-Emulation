@@ -61,34 +61,27 @@ int assembleLine(char *string, char *bytes) {
 	}
 
 	if(strcmp(words[0] , "and") == 0) {
-		bytes[0] = (2 << 4) | getRegister(words[1]);
-		bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
-		return 2;
+			return encode3R(bytes,2);
 	}
-
 	if(strcmp(words[0] , "divide") == 0) {
-		bytes[0] = (3 << 4) | getRegister(words[1]);
-		bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
-		return 2;
+			return encode3R(bytes,3);
 	}
+	if(strcmp(words[0] , "halt") == 0) {
+			bytes[0] = 0;
+			bytes[1] = 0;
+			return 2;
 
+	}
 	if(strcmp(words[0] , "multiply") == 0) {
-		bytes[0] = (4 << 4) | getRegister(words[1]);
-		bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
-		return 2;
+			return encode3R(bytes,4);
 	}
-
-	if(strcmp(words[0] , "subtract") == 0) {
-		bytes[0] = (5 << 4) | getRegister(words[1]);
-		bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
-		return 2;
-	}
-
 	if(strcmp(words[0] , "or") == 0) {
-		bytes[0] = (6 << 4) | getRegister(words[1]);
-		bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
-		return 2;
+			return encode3R(bytes,6);
 	}
+	if(strcmp(words[0] , "subtract") == 0) {
+			return encode3R(bytes,5);
+	}
+
 
 
 
