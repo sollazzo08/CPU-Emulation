@@ -75,13 +75,13 @@ int encodeLS(char*bytes, int opcode) {
 
 }
 */
-
+/*
 int encodeStack(char*bytes, int opcode) {
 	bytes[0] = opcode << 4 | getRegister(words[1])
-	bytes[1] = 
+	bytes[1] =
 	return 2;
 }
-
+*/
 
 int encodeMove(char *bytes, int opcode) {
 	if(opcode == 11){
