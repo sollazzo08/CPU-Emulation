@@ -5,4 +5,14 @@ halt 0 0 0
 multiply R1 R2 R3
 or R1 R2 R3
 subtract R1 R2 R3
+branchIfLess R1 R2 6
 branchIfLessThanOrEqual R1 R2 6
+branchIfEqual R1 R2 6
+branchIfNotEqual R1 R2 6
+branchIfGreater R1 R2 1
+branchIfGreaterOrEqual R1 R2 6
+call 6
+jump 6
+move r1 10
+interrupt 0
+interrupt 1

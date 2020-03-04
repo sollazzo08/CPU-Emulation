@@ -41,25 +41,70 @@ int getRegister (char* string) {
 	return atoi(string+1); //converts string to number R1 = 1
 }
 
-int encode3R(char *bytes,int opcode) {
+int encode3R(char *bytes, int opcode) {
 
-			bytes[0] = (opcode << 4) | getRegister(words[1]); //what value does that produce?? is it a binary or a hex?
-			bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
-			return 2; //number of bytes returned
+	bytes[0] = (opcode << 4) | getRegister(words[1]); //what value does that produce?? is it a binary or a hex?
+	bytes[1] = getRegister(words[2]) | getRegister(words[3]);
+	return 2; //number of bytes returned
 }
+
+
+int encodeBR1(char *bytes, int opcode, int branchType) {
+
+	bytes[0] = (opcode << 4) | branchType;
+	bytes[1] = (getRegister(words[1]) << 4) | getRegister(words[2]);
+	int t = (atoi(words[3]) / 2);
+	bytes[2] = t >> 8;
+	bytes[3] = t; // 16bit is being truncated since we store it in only 8
+	return 4;
+}
+
+
+int encodeBR2(char *bytes, int opcode, int branchType) {
+
+	bytes[0] = (opcode << 4) | branchType;
+	int t = (atoi(words[3]) / 2);
+	bytes[1] = t >> 8;
+	bytes[2] = t >> 8;
+	bytes[3] = t; // 16bit is being truncated since we store it in only 8
+	return 4;
+}
+
+/*
+int encodeLS(char*bytes, int opcode) {
+
+}
+*/
+/*
+int encodeStack(char*bytes, int opcode) {
+
+}
+*/
+
+int encodeMove(char *bytes, int opcode) {
+	if(opcode == 11){
+		bytes[0] = opcode << 4 | getRegister(words[1]);
+		int t = atoi(words[2]);
+		bytes[1] = t;
+		return 2;
+	} else
+		bytes[0] = opcode << 4 | 0; //register is ignored
+		int t = atoi(words[1]);
+		bytes[1] = t;
+		return 2;
+}
+
+
+
 
 // Figure out from the first word which operation we are doing and do it...
 int assembleLine(char *string, char *bytes) {
 
 	getWords(string);
-
+  /****************3R******************/
 	if (strcmp(words[0] ,"add") == 0) {
-			// encode3R(bytes,1);
-		//	bytes[0] = (1 << 4) | getRegister(words[1]); //what value does that produce?? is it a binary or a hex?
-		//	bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
-			return encode3R(bytes,1); //number of bytes returned
+			return encode3R(bytes,1);
 	}
-
 	if(strcmp(words[0] , "and") == 0) {
 			return encode3R(bytes,2);
 	}
@@ -70,7 +115,6 @@ int assembleLine(char *string, char *bytes) {
 			bytes[0] = 0;
 			bytes[1] = 0;
 			return 2;
-
 	}
 	if(strcmp(words[0] , "multiply") == 0) {
 			return encode3R(bytes,4);
@@ -81,15 +125,37 @@ int assembleLine(char *string, char *bytes) {
 	if(strcmp(words[0] , "subtract") == 0) {
 			return encode3R(bytes,5);
 	}
-
-	if(strcmp(words[0], "branchIfLessThanOrEqual") == 0) {
-			bytes[0] = (7 << 4) | (1 << 4);
-			bytes[1] = (getRegister(words[1]) << 4) | getRegister(words[2]);
-			bytes[2] = 0;
-			bytes[3] = 0 | (6 >> 0);
-			return 4;
+	/****************Branches******************/
+	if(strcmp(words[0], "branchIfLess") == 0) {
+			return encodeBR1(bytes,7,0);
 	}
-
+	if(strcmp(words[0], "branchIfLessThanOrEqual") == 0) {
+			return encodeBR1(bytes,7,1);
+	}
+	if(strcmp(words[0], "branchIfEqual") == 0) {
+			return encodeBR1(bytes,7,2);
+	}
+	if(strcmp(words[0], "branchIfNotEqual") == 0) {
+			return encodeBR1(bytes,7,3);
+	}
+	if(strcmp(words[0], "branchIfGreater") == 0) {
+			return encodeBR1(bytes,7,4);
+	}
+	if(strcmp(words[0], "branchIfGreaterOrEqual") == 0) {
+			return encodeBR1(bytes,7,5);
+	}
+	if(strcmp(words[0], "call") == 0) {
+			return encodeBR2(bytes,7,6);
+	}
+	if(strcmp(words[0], "jump") == 0) {
+			return encodeBR2(bytes,7,7);
+	}
+	/****************Move******************/
+	if(strcmp(words[0], "move") == 0) {
+			return encodeMove(bytes,11);
+	}if(strcmp(words[0], "interrupt") == 0) {
+			return encodeMove(bytes,12);
+	}
 
 
 }
