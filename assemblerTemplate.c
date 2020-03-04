@@ -82,6 +82,13 @@ int assembleLine(char *string, char *bytes) {
 			return encode3R(bytes,5);
 	}
 
+	if(strcmp(words[0], "branchIfLessThanOrEqual") == 0) {
+			bytes[0] = (7 << 4) | (1 << 4);
+			bytes[1] = (getRegister(words[1]) << 4) | getRegister(words[2]);
+			bytes[2] = 0;
+			bytes[3] = 0 | (6 >> 0);
+			return 4;
+	}
 
 
 

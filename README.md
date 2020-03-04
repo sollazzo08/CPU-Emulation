@@ -5,7 +5,7 @@ Emulate a simple CPU using a virtual machine
 
 ## Instructions
 
-gcc assembleTemplate.c
+gcc assemblerTemplate.c
 
 ./a.out assemblerLines.txt assemblerLines.bin
 
@@ -17,5 +17,3 @@ Made by:
 ### Michael Sollazzo
 ### Computer Organization - ICSI-404
 ### University at Albany
-
-

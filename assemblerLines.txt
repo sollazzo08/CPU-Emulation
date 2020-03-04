@@ -5,3 +5,4 @@ halt 0 0 0
 multiply R1 R2 R3
 or R1 R2 R3
 subtract R1 R2 R3
+branchIfLessThanOrEqual R1 R2 6
