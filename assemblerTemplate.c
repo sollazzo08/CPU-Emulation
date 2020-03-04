@@ -63,7 +63,7 @@ int encodeBR1(char *bytes, int opcode, int branchType) {
 int encodeBR2(char *bytes, int opcode, int branchType) {
 
 	bytes[0] = (opcode << 4) | branchType;
-	int t = (atoi(words[3]) / 2);
+	int t = (atoi(words[1]) / 2);
 	bytes[1] = t >> 8;
 	bytes[2] = t >> 8;
 	bytes[3] = t; // 16bit is being truncated since we store it in only 8
@@ -75,11 +75,13 @@ int encodeLS(char*bytes, int opcode) {
 
 }
 */
-/*
-int encodeStack(char*bytes, int opcode) {
 
+int encodeStack(char*bytes, int opcode) {
+	bytes[0] = opcode << 4 | getRegister(words[1])
+	bytes[1] = 
+	return 2;
 }
-*/
+
 
 int encodeMove(char *bytes, int opcode) {
 	if(opcode == 11){
@@ -150,10 +152,22 @@ int assembleLine(char *string, char *bytes) {
 	if(strcmp(words[0], "jump") == 0) {
 			return encodeBR2(bytes,7,7);
 	}
+	/****************Stack******************/
+	if(strcmp(words[0], "pop") == 0) {
+			return encodeMove(bytes,10);
+	}
+	if(strcmp(words[0], "push") == 0) {
+			return encodeMove(bytes,10);
+	}
+	if(strcmp(words[0], "return") == 0) {
+			return encodeMove(bytes,10);
+	}
+
 	/****************Move******************/
 	if(strcmp(words[0], "move") == 0) {
 			return encodeMove(bytes,11);
-	}if(strcmp(words[0], "interrupt") == 0) {
+	}
+	if(strcmp(words[0], "interrupt") == 0) {
 			return encodeMove(bytes,12);
 	}
 

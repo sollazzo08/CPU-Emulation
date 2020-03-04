@@ -10,7 +10,8 @@ branchIfLessThanOrEqual R1 R2 6
 branchIfEqual R1 R2 6
 branchIfNotEqual R1 R2 6
 branchIfGreater R1 R2 1
-branchIfGreaterOrEqual R1 R2 6
+branchIfGreaterOrEqual R1 R2 87
+
 call 6
 jump 6
 move r1 10

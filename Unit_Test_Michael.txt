@@ -142,7 +142,7 @@ move R1 10				B1 0A
 
 move R2 10				B2 0A
 
-branchIfLessThanOrEqual R1 R2 6         71 12 00 03	
+branchIfLessThanOrEqual R1 R2 6         71 12 00 03
 
 halt
 
@@ -317,9 +317,9 @@ Pop
 
 move R1 10			B1 0A
 
-push R1				A1 10
+push R1				  A1 10
 
-pop R2				A2 20
+pop R2				  A2 20
 
 interrupt 0 			C0 00
 
