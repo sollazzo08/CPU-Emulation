@@ -44,7 +44,7 @@ int getRegister (char* string) {
 int encode3R(char *bytes, int opcode) {
 
 	bytes[0] = (opcode << 4) | getRegister(words[1]); //what value does that produce?? is it a binary or a hex?
-	bytes[1] = getRegister(words[2]) | getRegister(words[3]);
+	bytes[1] = (getRegister(words[2]) << 4) | getRegister(words[3]);
 	return 2; //number of bytes returned
 }
 
@@ -58,7 +58,6 @@ int encodeBR1(char *bytes, int opcode, int branchType) {
 	bytes[3] = t; // 16bit is being truncated since we store it in only 8
 	return 4;
 }
-
 
 int encodeBR2(char *bytes, int opcode, int branchType) {
 
@@ -75,13 +74,14 @@ int encodeLS(char*bytes, int opcode) {
 
 }
 */
-/*
-int encodeStack(char*bytes, int opcode) {
-	bytes[0] = opcode << 4 | getRegister(words[1])
-	bytes[1] =
+
+
+int encodeStack(char*bytes, int opcode, int instruction) {
+	bytes[0] = opcode << 4 | getRegister(words[1]);
+	bytes[1] = instruction << 6 | 0;
 	return 2;
 }
-*/
+
 
 int encodeMove(char *bytes, int opcode) {
 	if(opcode == 11){
@@ -146,24 +146,26 @@ int assembleLine(char *string, char *bytes) {
 	if(strcmp(words[0], "branchIfGreaterOrEqual") == 0) {
 			return encodeBR1(bytes,7,5);
 	}
+
 	if(strcmp(words[0], "call") == 0) {
 			return encodeBR2(bytes,7,6);
 	}
 	if(strcmp(words[0], "jump") == 0) {
 			return encodeBR2(bytes,7,7);
 	}
-	/****************Stack******************/
+
+
 	if(strcmp(words[0], "pop") == 0) {
-			return encodeMove(bytes,10);
+			return encodeStack(bytes,10,1);
 	}
 	if(strcmp(words[0], "push") == 0) {
-			return encodeMove(bytes,10);
+			return encodeStack(bytes,10,2);
 	}
 	if(strcmp(words[0], "return") == 0) {
-			return encodeMove(bytes,10);
+			return encodeStack(bytes,10,0);
 	}
 
-	/****************Move******************/
+
 	if(strcmp(words[0], "move") == 0) {
 			return encodeMove(bytes,11);
 	}
