@@ -41,6 +41,8 @@ int getRegister (char* string) {
 	return atoi(string+1); //converts string to number R1 = 1
 }
 
+
+//function call to handle all the 3R instructions
 int encode3R(char *bytes, int opcode) {
 
 	bytes[0] = (opcode << 4) | getRegister(words[1]); //what value does that produce?? is it a binary or a hex?
@@ -48,7 +50,7 @@ int encode3R(char *bytes, int opcode) {
 	return 2; //number of bytes returned
 }
 
-
+//function call to handle all the BR1 instructions
 int encodeBR1(char *bytes, int opcode, int branchType) {
 
 	bytes[0] = (opcode << 4) | branchType;
@@ -59,6 +61,7 @@ int encodeBR1(char *bytes, int opcode, int branchType) {
 	return 4;
 }
 
+//function call to handle all the BR2 instructions
 int encodeBR2(char *bytes, int opcode, int branchType) {
 
 	bytes[0] = (opcode << 4) | branchType;
@@ -75,20 +78,24 @@ int encodeLS(char*bytes, int opcode) {
 }
 */
 
-
+// Function call to handle all the stack Instructions
+// Accepts opcode and instruction 00,01,10
 int encodeStack(char*bytes, int opcode, int instruction) {
+
+	//if instruction 0 then it is "return"
 	if(instruction != 0){
 		bytes[0] = opcode << 4 | getRegister(words[1]);
 		bytes[1] = instruction << 6 | 0;
 			return 2;
-	} else 
+	} else
 		bytes[0] = opcode << 4 | 0;
-		bytes[1] = instruction << 6 | 0;
+		bytes[1] = instruction << 6 | 0; //shift left 6 to handle byte[1]
 
 	return 2;
 }
 
-
+//Function call to handle all the Move Instructions
+//Accpets opcode
 int encodeMove(char *bytes, int opcode) {
 	if(opcode == 11){
 		bytes[0] = opcode << 4 | getRegister(words[1]);
@@ -101,9 +108,6 @@ int encodeMove(char *bytes, int opcode) {
 		bytes[1] = t;
 		return 2;
 }
-
-
-
 
 // Figure out from the first word which operation we are doing and do it...
 int assembleLine(char *string, char *bytes) {
@@ -152,15 +156,13 @@ int assembleLine(char *string, char *bytes) {
 	if(strcmp(words[0], "branchIfGreaterOrEqual") == 0) {
 			return encodeBR1(bytes,7,5);
 	}
-
 	if(strcmp(words[0], "call") == 0) {
 			return encodeBR2(bytes,7,6);
 	}
 	if(strcmp(words[0], "jump") == 0) {
 			return encodeBR2(bytes,7,7);
 	}
-
-
+		/****************Stack******************/
 	if(strcmp(words[0], "pop") == 0) {
 			return encodeStack(bytes,10,1);
 	}
@@ -170,16 +172,13 @@ int assembleLine(char *string, char *bytes) {
 	if(strcmp(words[0], "return") == 0) {
 			return encodeStack(bytes,10,0);
 	}
-
-
+		/****************Move******************/
 	if(strcmp(words[0], "move") == 0) {
 			return encodeMove(bytes,11);
 	}
 	if(strcmp(words[0], "interrupt") == 0) {
 			return encodeMove(bytes,12);
 	}
-
-
 }
 
 int main (int argc, char **argv)  {
@@ -201,5 +200,3 @@ int main (int argc, char **argv)  {
 	fclose(in);
 	fclose(out);
 }
-
-//encode 3R AS A POSSIBLE FUCNTION
