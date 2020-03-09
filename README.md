@@ -10,7 +10,6 @@ gcc assemblerTemplate.c
 ./a.out assemblerLines.txt assemblerLines.bin
 
 hexdump assemblerLines.bin
-
 --
 
 Made by:

@@ -77,8 +77,14 @@ int encodeLS(char*bytes, int opcode) {
 
 
 int encodeStack(char*bytes, int opcode, int instruction) {
-	bytes[0] = opcode << 4 | getRegister(words[1]);
-	bytes[1] = instruction << 6 | 0;
+	if(instruction != 0){
+		bytes[0] = opcode << 4 | getRegister(words[1]);
+		bytes[1] = instruction << 6 | 0;
+			return 2;
+	} else 
+		bytes[0] = opcode << 4 | 0;
+		bytes[1] = instruction << 6 | 0;
+
 	return 2;
 }
 
@@ -131,7 +137,7 @@ int assembleLine(char *string, char *bytes) {
 	if(strcmp(words[0], "branchIfLess") == 0) {
 			return encodeBR1(bytes,7,0);
 	}
-	if(strcmp(words[0], "branchIfLessThanOrEqual") == 0) {
+	if(strcmp(words[0], "branchIfLessOrEqual") == 0) {
 			return encodeBR1(bytes,7,1);
 	}
 	if(strcmp(words[0], "branchIfEqual") == 0) {
