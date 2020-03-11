@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+/* Michael Sollazzo
+	404
+*/
 char *words[5];
 
 /* Take a string. Split it into different words, putting them in the words array. For example:
@@ -72,7 +74,7 @@ int encodeBR2(char *bytes, int opcode, int branchType) {
 	return 4;
 }
 
-//function call to handle all the Load and store instructions 
+//function call to handle all the Load and store instructions
 int encodeLS(char*bytes, int opcode) {
   bytes[0] = (opcode << 4) | getRegister(words[1]);
 	bytes[1] = getRegister(words[2]) << 4 | atoi(words[3]);
