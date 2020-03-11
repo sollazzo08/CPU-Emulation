@@ -13,6 +13,8 @@ branchIfGreater R1 R2 1
 branchIfGreaterOrEqual R1 R2 6
 call 6
 jump 6
+load R1 R2 6
+store R1 R2 6
 pop R1
 push R2
 return

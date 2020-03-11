@@ -72,11 +72,13 @@ int encodeBR2(char *bytes, int opcode, int branchType) {
 	return 4;
 }
 
-/*
+//function call to handle all the Load and store instructions 
 int encodeLS(char*bytes, int opcode) {
-
+  bytes[0] = (opcode << 4) | getRegister(words[1]);
+	bytes[1] = getRegister(words[2]) << 4 | atoi(words[3]);
+	return 2;
 }
-*/
+
 
 // Function call to handle all the stack Instructions
 // Accepts opcode and instruction 00,01,10
@@ -161,6 +163,13 @@ int assembleLine(char *string, char *bytes) {
 	}
 	if(strcmp(words[0], "jump") == 0) {
 			return encodeBR2(bytes,7,7);
+	}
+		/****************Load/Store******************/
+	if(strcmp(words[0], "load") == 0) {
+			return encodeLS(bytes,8);
+	}
+	if(strcmp(words[0], "store") == 0) {
+			return encodeLS(bytes,9);
 	}
 		/****************Stack******************/
 	if(strcmp(words[0], "pop") == 0) {
