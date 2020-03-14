@@ -14,5 +14,5 @@ hexdump assemblerLines.bin
 
 Made by:
 ### Michael Sollazzo
-### Computer Organization - ICSI-404
+### Computer Organization - CSI-404
 ### University at Albany
