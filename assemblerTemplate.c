@@ -203,7 +203,7 @@ int main (int argc, char **argv)  {
 	char bytes[4], inputLine[100];
 
 	while (!feof(in)) {
-		if (NULL != fgets(inputLine,100,in)) {
+		if (NULL != fgets(inputLine,100,fp)) {
 			int outSize = assembleLine(inputLine,bytes);
 			fwrite(bytes,outSize,1,out); //write out bytes array
 		}
