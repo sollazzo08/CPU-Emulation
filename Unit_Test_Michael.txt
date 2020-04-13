@@ -81,7 +81,7 @@ R3 == 20
 Or
 
 
-move R1 12			B1 04
+move R1 12			B1 0C
 
 move R2 8			B2 08
 

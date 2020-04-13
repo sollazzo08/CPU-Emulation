@@ -1,0 +1,4 @@
+jump 6
+halt
+interrupt 0
+halt

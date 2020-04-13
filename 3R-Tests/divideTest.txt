@@ -1,0 +1,5 @@
+move R1 20
+move R2 5
+divide R1 R2 R3
+interrupt 0 
+halt

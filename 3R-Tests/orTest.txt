@@ -1,0 +1,5 @@
+move R1 12
+move R2 8
+or R1 R2 R3
+interrupt 0
+halt

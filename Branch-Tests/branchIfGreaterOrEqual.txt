@@ -1,0 +1,7 @@
+move R1 12
+move R2 10
+branchIfGreaterOrEqual R1 R2 6
+interrupt
+move R5 12
+interrupt 0
+halt

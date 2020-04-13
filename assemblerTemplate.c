@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -200,10 +199,10 @@ int main (int argc, char **argv)  {
 	FILE *out = fopen(argv[2],"wb");
 	if (out == NULL) { printf ("unable to open output file\n"); exit(1); }
 
-	char bytes[4], inputLine[100];
+	char bytes[4], inputLine[100];	
 
 	while (!feof(in)) {
-		if (NULL != fgets(inputLine,100,fp)) {
+		if (NULL != fgets(inputLine,100,in)) {
 			int outSize = assembleLine(inputLine,bytes);
 			fwrite(bytes,outSize,1,out); //write out bytes array
 		}

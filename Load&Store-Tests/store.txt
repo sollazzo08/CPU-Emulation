@@ -1,0 +1,4 @@
+move R2 10
+store R1 R2
+interrupt 0
+halt

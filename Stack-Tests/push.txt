@@ -1,0 +1,5 @@
+move R1 10
+push R1
+pop R2
+interrupt 0
+halt
